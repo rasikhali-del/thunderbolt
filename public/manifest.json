@@ -1,19 +1,20 @@
 {
   "name": "Thunderbolts Cricket Team",
   "short_name": "Thunderbolts",
+  "description": "Official Thunderbolts Cricket Team — match stats, players, and team highlights from Rawalpindi.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1d4ed8",
-  "description": "Official Thunderbolts Cricket Team — Power, Passion, and Precision from Rawalpindi.",
+  "background_color": "#1a1a1a",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/images/favicon.png",
+      "src": "/images/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/thunderbolts-logo.png",
+      "src": "/images/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

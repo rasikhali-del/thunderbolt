@@ -1,0 +1,30 @@
+.player-page {
+    margin-top: 2rem;
+  }
+  
+  .player-details {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  
+  .player-photo img {
+    width: 300px;
+    border-radius: 15px;
+  }
+  
+  .player-info {
+    flex: 1;
+  }
+  
+  .player-info h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .player-info h4 {
+    font-size: 1.2rem;
+    color: #7c3aed;
+    margin-bottom: 1rem;
+  }
+  

@@ -4,11 +4,12 @@ import { Helmet } from "react-helmet-async";
 import SEO from "./components/SEO";
 const ADMIN_EMAIL = "admin@thunderbolts.local";
 const ADMIN_PASS = "supersecret";
-
+import PlayerCard from "./components/PlayerCard";
+import PlayerPage from "./components/PlayerPage";
 export default function ThunderboltsSite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [adminMode, setAdminMode] = useState(false);
-
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   // ----- TEAM DATA -----
   const players = [
     {
@@ -113,35 +114,58 @@ export default function ThunderboltsSite() {
     <div className="site">
       {/* SEO META TAGS */}
       <Helmet>
-        <title>Thunderbolts Cricket Team — Power. Passion. Precision.</title>
-        <meta name="description" content="Official Thunderbolts Cricket Team — stats, players, and match results." />
-        <meta name="keywords" content="Thunderbolts, cricket, Pakistan, Rasikh Ali, Aun Abbas, Mujtaba, Hamza Naeem" />
-        <link rel="preload" as="image" href="/team-banner.webp" />
-      </Helmet>
-      <SEO
+  <title>Thunderbolts Cricket Team — Power. Passion. Precision.</title>
+  <meta
+    name="description"
+    content="Official Thunderbolts Cricket Team — stats, players, and match results."
+  />
+  <meta
+    name="keywords"
+    content="Thunderbolts, cricket, Pakistan, Rasikh Ali, Aun Abbas, Mujtaba, Hamza Naeem"
+  />
+  <link rel="preload" as="image" href="/team-banner.webp" />
+</Helmet>
+<SEO
   title="Thunderbolts Cricket Team — Power. Passion. Precision."
   description="Official Thunderbolts Cricket Team — stats, players, match highlights, and results. Based in Rawalpindi, Pakistan."
   keywords={[
     "Thunderbolts Cricket",
-    "cricket team Pakistan",
-    "Rawalpindi cricket",
-    "Thunderbolts players",
-    "Rasikh Ali",
-    "Aun Abbas",
-    "Mujtaba",
-    "Hamza Naeem"
+    "Thunderbolts team Pakistan",
+    "Rawalpindi cricket team",
+    "cricket in Rawalpindi",
+    "Rasikh Ali cricket",
+    "Aun Abbas cricket",
+    "Mujtaba cricket",
+    "Hamza Naeem cricket",
+    "local cricket club Pakistan",
+    "cricket match results Rawalpindi",
+    "Pakistan club cricket",
+    "senior cricket players Pakistan",
+    "cricket highlights Rawalpindi",
+    "Thunderbolts match stats",
+    "top cricket performers",
+    "Thunderbolts fixtures",
+    "Rawalpindi cricket league",
+    "Thunderbolts club news",
+    "youth cricket Pakistan",
+    "all-rounder cricket players",
+    "wicketkeeper batsman Pakistan",
+    "cricket team profile",
+    "Thunderbolts captain",
+    "cricket club schedule",
+    "Thunderbolts club updates"
   ]}
-  image="/team-banner.jpg"
-  canonicalPath="/"
-  googleSiteVerification="YOUR_GOOGLE_VERIFICATION_CODE_HERE"
+  image="https://thunderboltscricket.vercel.app/team-banner.jpg"
+  canonicalPath="https://thunderboltscricket.vercel.app/"
+  googleSiteVerification="OREHeffV0YDRL5GUhC49gV2yetSPMADbIenN2pup_Jw"
   structuredData={[
     {
       "@context": "https://schema.org",
       "@type": "SportsTeam",
       name: "Thunderbolts Cricket Team",
       sport: "Cricket",
-      url: "https://thunderboltscricket.com",
-      logo: "https://thunderboltscricket.com/team-banner.jpg",
+      url: "https://thunderboltscricket.vercel.app",
+      logo: "https://thunderboltscricket.vercel.app/team-banner.jpg",
       member: [
         { "@type": "Person", name: "Rasikh Ali", jobTitle: "Captain" },
         { "@type": "Person", name: "Hamza Naeem", jobTitle: "Vice Captain" },
@@ -162,11 +186,13 @@ export default function ThunderboltsSite() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: "Thunderbolts Cricket Team",
-      url: "https://thunderboltscricket.com",
+      url: "https://thunderboltscricket.vercel.app",
       inLanguage: "en"
     }
   ]}
 />
+
+
 
       {/* HEADER */}
       <header className="header">
@@ -218,7 +244,7 @@ export default function ThunderboltsSite() {
 
         <section className="news-section container">
           <h2>Historic Matches</h2>
-          <h3>Recent Highlights</h3>
+       
           <div className="news-grid">
             {highlights.map((n) => (
               <article key={n.id} className="news-card">
@@ -250,41 +276,71 @@ export default function ThunderboltsSite() {
         </section>
 
         <section id="scores" className="container scores-section">
-          <h2>Match Stats</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Runs</th>
-                <th>Wickets</th>
-                <th>Best Bowling</th>
-                <th>Top Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {matches.map((m) => (
-                <tr key={m.id}>
-                  <td>{m.date}</td>
-                  <td>{m.opponent}</td>
-                  <td>{m.runs}</td>
-                  <td>{m.wickets}</td>
-                  <td>{m.result}</td>
-                  <td>{m.topPerformer}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+  <h2>Match Stats</h2>
 
-          <div className="top-performers">
-            <h3>Top Performers</h3>
-            <ul className="performers">
-              {topPerformers.map((tp) => (
-                <li key={tp.id}>{tp.name} — <span>{tp.stat}</span></li>
-              ))}
-            </ul>
-          </div>
-        </section>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Opponent</th>
+        <th>Runs</th>
+        <th>Wickets</th>
+        <th>Result</th>
+        <th>Top Performer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {matches.map((m) => (
+        <tr key={m.id}>
+          <td>{m.id}</td>
+          <td>{m.opponent}</td>
+          <td>{m.runs}</td>
+          <td>{m.wickets}</td>
+          <td>{m.result}</td>
+          <td>
+            {/* Find the player object for this top performer */}
+            {players.find((p) => m.topPerformer.includes(p.name)) ? (
+              <span
+                style={{ cursor: "pointer", color: "#7c3aed", textDecoration: "underline" }}
+                onClick={() =>
+                  setSelectedPlayer(players.find((p) => m.topPerformer.includes(p.name)))
+                }
+              >
+                {m.topPerformer}
+              </span>
+            ) : (
+              m.topPerformer
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <div className="top-performers">
+    <h3>Top Performers</h3>
+    <ul className="performers">
+      {topPerformers.map((tp) => {
+        const player = players.find((p) => p.name.includes(tp.name));
+        return (
+          <li
+            key={tp.id}
+            onClick={() => setSelectedPlayer(player)}
+            style={{ cursor: "pointer" }}
+          >
+            {tp.name} — <span>{tp.stat}</span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+
+  {/* Player Stats Card Modal */}
+  {selectedPlayer && (
+    <PlayerCard player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+  )}
+</section>
+
 
         <section id="contact" className="container contact-section">
           <h2>Contact the Team</h2>

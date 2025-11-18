@@ -1,4 +1,6 @@
+# Allow all crawlers
 User-agent: *
-Allow: /
+Disallow:
 
-Sitemap: https://thunderbolts-ashen.vercel.app/sitemap.xml
+# Sitemap location
+Sitemap: https://thunderboltscricket.vercel.app/sitemap.xml

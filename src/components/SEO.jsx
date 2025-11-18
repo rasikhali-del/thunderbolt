@@ -23,7 +23,7 @@ export default function SEO({
   description,
   keywords = [],
   image = "/thunderbolts-logo.jpg",
-  canonicalPath,
+  canonicalPath = "",
   noindex = false,
   structuredData,
   googleSiteVerification,
@@ -45,7 +45,8 @@ export default function SEO({
         ? keywords.join(", ")
         : String(keywords || "") ||
           "Thunderbolts, cricket, Pakistan, Rawalpindi cricket team, Rasikh Ali, Aun Abbas, Mujtaba, Hamza Naeem";
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    
+    const origin = "https://thunderboltscricket.vercel.app"; // Fixed to your Vercel deployment
     const url = origin + (canonicalPath || (typeof window !== "undefined" ? window.location.pathname : ""));
 
     // Basic Meta
@@ -55,11 +56,7 @@ export default function SEO({
     setOrCreate("link", "seo-canonical", { rel: "canonical", href: url });
 
     // Robots
-    if (noindex) {
-      setOrCreate("meta", "seo-robots", { name: "robots", content: "noindex, nofollow" });
-    } else {
-      setOrCreate("meta", "seo-robots", { name: "robots", content: "index, follow" });
-    }
+    setOrCreate("meta", "seo-robots", { name: "robots", content: noindex ? "noindex, nofollow" : "index, follow" });
 
     // Open Graph
     setOrCreate("meta", "og-title", { property: "og:title", content: resolvedTitle });
