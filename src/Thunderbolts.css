@@ -7,6 +7,119 @@ body, html {
     font-family: system-ui, Arial, sans-serif;
     scroll-behavior: smooth;
   }
+  /* Container for smooth animation */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Small floating circle */
+.chat-circle {
+  background: #7c3aed;
+  color: #fff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  padding: 10px;
+  transition: transform 0.2s;
+}
+.chat-circle:hover {
+  transform: scale(1.1);
+}
+
+/* Expanded chat panel */
+.chat-container.open {
+  width: 350px;
+  height: 450px;
+}
+
+.chat-panel {
+  width: 350px;
+  height: 450px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0);
+  animation: expand 0.3s forwards;
+}
+
+@keyframes expand {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.chat-header {
+  background: #7c3aed;
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-messages {
+  color: black;
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f7f7f7;
+}
+
+.msg {
+  color: #000;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.msg.user {
+  background: #e0d7f7;
+  text-align: right;
+}
+
+.msg.bot {
+  background: #d1f7e0;
+  text-align: left;
+}
+
+.chat-input {
+  display: flex;
+  padding: 8px;
+  background: #fff;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.chat-input button {
+  margin-left: 6px;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
   
   .container {
     width: 90%;

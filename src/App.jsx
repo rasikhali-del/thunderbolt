@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import "./Thunderbolts.css";
 import { Helmet } from "react-helmet-async";
 import SEO from "./components/SEO";
@@ -118,6 +118,8 @@ export default function ThunderboltsSite() {
 
   return (
     <div className="site">
+      <ChatBot players={players} matches={matches} highlights={highlights} />
+
       {/* SEO META TAGS */}
       <Helmet>
   <title>Thunderbolts Cricket Team — Power. Passion. Precision.</title>
@@ -416,7 +418,81 @@ function Logo() {
 function AnimatedBall() {
   return <div className="animated-ball">🏏</div>;
 }
+function ChatBot() {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { role: "bot", text: "Hi! I’m ThunderBot ⚡ Ask me about the team, players, matches, or schedule!" }
+  ]);
+  const [input, setInput] = useState("");
+  const chatRef = useRef(null);
 
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const sendMessage = () => {
+    if (!input) return;
+
+    const userMsg = input;
+    const lower = input.toLowerCase();
+
+    let reply = "I’m not sure. Try asking about Captain, Vice Captain, Ground, T20, or Sunday.";
+
+    if (lower.includes("sunday") || lower.includes("available")) {
+      reply = "You can send a message; the match or event is on Sunday.";
+    } else if (lower.includes("captain") && lower.includes("vice")) {
+      reply = "Rasikh Ali is Captain ⚡, Hamza Naeem is Vice Captain 🏏.";
+    } else if (lower.includes("captain")) {
+      reply = "Rasikh Ali is the Captain of Thunderbolts ⚡.";
+    } else if (lower.includes("vice captain")) {
+      reply = "Hamza Naeem is the Vice Captain 🏏.";
+    } else if (lower.includes("ground") || lower.includes("stadium")) {
+      reply = "The Thunderbolts play at Morgah Ground.";
+    } else if (lower.includes("format") || lower.includes("type of cricket")) {
+      reply = "They play T20 matches.";
+    }
+
+    setMessages([...messages, { role: "user", text: userMsg }, { role: "bot", text: reply }]);
+    setInput("");
+  };
+
+  return (
+    <>
+      <div className={`chat-container ${open ? "open" : ""}`}>
+        {!open && (
+          <div className="chat-circle" onClick={() => setOpen(true)}>
+            Ask Questions 💬
+          </div>
+        )}
+
+        {open && (
+          <div className="chat-panel">
+            <div className="chat-header">
+              <span>ThunderBot ⚡</span>
+              <button onClick={() => setOpen(false)}>✖</button>
+            </div>
+            <div className="chat-messages" ref={chatRef}>
+              {messages.map((m, i) => (
+                <div key={i} className={`msg ${m.role}`}>{m.text}</div>
+              ))}
+            </div>
+            <div className="chat-input">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask ThunderBot..."
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              />
+              <button onClick={sendMessage}>Send</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
 function AdminPage({ onExit }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
