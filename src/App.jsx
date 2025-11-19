@@ -41,6 +41,12 @@ export default function ThunderboltsSite() {
       photo: "WhatsApp Image 2025-10-25 at 12.03.12_dd2f6cee.jpg",
     },
   ];
+  const imageSizes = {
+    "Ras.jpg": { w: 720, h: 887 },
+    "WhatsApp Image 2025-10-25 at 12.34.53_e9bacc3a.jpg": { w: 1200, h: 1600 },
+    "Aun.jpg": { w: 1080, h: 1100 },
+    "WhatsApp Image 2025-10-25 at 12.03.12_dd2f6cee.jpg": { w: 904, h: 1280 },
+  };
 
   // ----- MATCH DATA -----
   const matches = [
@@ -272,21 +278,31 @@ export default function ThunderboltsSite() {
 </p>
           <h3>Team Leadership</h3>
           <div className="players-grid">
-            {players.map((p) => (
-              <article key={p.id} className="player-card">
-                <img
-  src={p.photo}
-  alt={`${p.name} — ${p.role}`}
-  title={p.name}
-  loading="lazy"
-  width="300"
-  height="auto"
-/>
-                <h3>{p.name}</h3>
-                <p className="role">{p.role}</p>
-                <p>{p.bio}</p>
-              </article>
-            ))}
+          {players.map((p) => {
+    const size = imageSizes[p.photo] || { w: 500, h: 500 }; // fallback
+
+    return (
+      <article key={p.id} className="player-card">
+        <img
+          src={p.photo}
+          alt={`${p.name} — ${p.role}`}
+          title={`${p.name} — ${p.role}`}
+          loading="lazy"
+          width={size.w}
+          height={size.h}
+          style={{
+            width: "300px",
+            height: "auto",
+            borderRadius: "10px",
+          }}
+        />
+
+        <h3>{p.name}</h3>
+        <p className="role">{p.role}</p>
+        <p>{p.bio}</p>
+      </article>
+    );
+  })}
           </div>
         </section>
 
