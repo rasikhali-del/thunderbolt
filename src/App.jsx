@@ -226,7 +226,15 @@ export default function ThunderboltsSite() {
               </div>
             </div>
             <div className="hero-image">
-              <img src="WhatsApp Image 2025-09-05 at 15.51.33_1a3ae2aa.jpg" alt="Thunderbolts Team" />
+            <img
+  src="WhatsApp Image 2025-09-05 at 15.51.33_1a3ae2aa.jpg"
+  alt="Thunderbolts Cricket Team Group Photo"
+  title="Thunderbolts Cricket Team"
+  loading="lazy"
+  width="500"
+  height="auto"
+/>
+
               <div className="featured">
                 <p className="highlight">Featured</p>
                 <p>Rasikh Ali — Leading the Charge</p>
@@ -266,7 +274,14 @@ export default function ThunderboltsSite() {
           <div className="players-grid">
             {players.map((p) => (
               <article key={p.id} className="player-card">
-                <img src={p.photo} alt={p.name} />
+                <img
+  src={p.photo}
+  alt={`${p.name} — ${p.role}`}
+  title={p.name}
+  loading="lazy"
+  width="300"
+  height="auto"
+/>
                 <h3>{p.name}</h3>
                 <p className="role">{p.role}</p>
                 <p>{p.bio}</p>
@@ -366,7 +381,18 @@ export default function ThunderboltsSite() {
             </p>
           </div>
 
-          <div className="map"> <iframe title="Thunderbolts Ground" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d33331.875705510355!2d73.012712!3d33.588883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dff2da8c1af127%3A0xa086c0b6fb3e1f07!2sRawalpindi%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1698200000000 " width="100%" height="250" style={{ border: 0 }} allowFullScreen="" loading="lazy" ></iframe> </div>
+          <div className="map"> 
+          <iframe
+  title="Thunderbolts Cricket Ground Location"
+  src="https://www.google.com/maps/embed?pb=..."
+  width="100%"
+  height="250"
+  style={{ border: 0 }}
+  allowFullScreen=""
+  loading="lazy"
+></iframe>
+
+          </div>
         </section>
 
         <footer className="footer">
