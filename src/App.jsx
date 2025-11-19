@@ -227,13 +227,13 @@ export default function ThunderboltsSite() {
             </div>
             <div className="hero-image">
             <img
-  src="WhatsApp Image 2025-09-05 at 15.51.33_1a3ae2aa.jpg"
-  alt="Thunderbolts Cricket Team Group Photo"
-  title="Thunderbolts Cricket Team"
-  loading="lazy"
-  width="500"
-  height="auto"
-/>
+    src="WhatsApp Image 2025-09-05 at 15.51.33_1a3ae2aa.jpg"
+    alt="Thunderbolts Cricket Team Group Photo"
+    title="Thunderbolts Cricket Team"
+    width="500"
+    height="500"
+    loading="lazy"
+  />
 
               <div className="featured">
                 <p className="highlight">Featured</p>
