@@ -161,7 +161,9 @@ export default function ThunderboltsSite() {
     "cricket team profile",
     "Thunderbolts captain",
     "cricket club schedule",
-    "Thunderbolts club updates"
+    "Thunderbolts club updates",
+    "Thunderbolts"
+
   ]}
   image="https://thunderboltscricket.vercel.app/team-banner.jpg"
   canonicalPath="https://thunderboltscricket.vercel.app/"
