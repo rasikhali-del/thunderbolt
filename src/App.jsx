@@ -66,7 +66,7 @@ export default function ThunderboltsSite() {
     { id: 14, date: "14", opponent: "Azan", runs: "33", wickets: "5", result: "2-44", topPerformer: "22 Runs", }, 
     { id: 15, date: "15", opponent: "Umair", runs: "189", wickets: "17", result: "3-29", topPerformer: "42 Runs", }, 
     { id: 16, date: "16", opponent: "Haseeb", runs: "380", wickets: "4", result: "2-28", topPerformer: "72 Runs", }, 
-    { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " Runs", }, 
+    { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " 32 Runs", }, 
     { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs", },
      { id: 19, date: "19", opponent: "Tayyab", runs: "61", wickets: "8", result: "3-26", topPerformer: "36 Runs", }, 
      { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs", },
