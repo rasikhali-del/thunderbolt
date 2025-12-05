@@ -406,13 +406,13 @@ export default function ThunderboltsSite() {
           <div className="map"> 
           <iframe
   title="Rawalpindi Pakistan Location"
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d332626.8860729869!2d72.87180289335973!3d33.565110117741486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df9567313a5a5b%3A0xdea5c1d6b0e1373e!2sRawalpindi%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000"
+   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d332626.8860729869!2d73.04262!3d33.57589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df95ccc1234567%3A0x0000000000000000!2sHarley%20Street%2C%20Rawalpindi%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000"
   width="100%"
   height="250"
-  style="border:0;"
-  allowfullscreen=""
-  loading="lazy">
-</iframe>
+  style={{ border: 0 }}
+  allowFullScreen
+  loading="lazy"
+></iframe>
 
           </div>
         </section>
