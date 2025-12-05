@@ -50,24 +50,36 @@ export default function ThunderboltsSite() {
 
   // ----- MATCH DATA -----
   const matches = [
-    { id: 1, date: "1", opponent: "Rasikh Ali", runs: "776", wickets: "38", result: "5-22", topPerformer: "81 Runs" },
-    { id: 2, date: "2", opponent: "Aun Abbas", runs: "1081", wickets: "25", result: "3-25", topPerformer: "110 Runs" },
-    { id: 3, date: "3", opponent: "Hamza Naeem", runs: "581", wickets: "27", result: "5-31", topPerformer: "67 Runs" },
-    { id: 4, date: "4", opponent: "Ali", runs: "733", wickets: "6", result: "3-38", topPerformer: "82 Runs" },
-    { id: 5, date: "5", opponent: "Mujtaba", runs: "807", wickets: "6", result: "3-27", topPerformer: "88 Runs" },
-    { id: 6, date: "6", opponent: "Hanzla", runs: "289", wickets: "66", result: "5-28", topPerformer: "72 Runs" },
-    { id: 7, date: "7", opponent: "Zain", runs: "139", wickets: "33", result: "4-36", topPerformer: "51 Runs" },
-    { id: 8, date: "8", opponent: "Saad Khan", runs: "647", wickets: "7", result: "3-19", topPerformer: "69 Runs" },
-    { id: 9, date: "9", opponent: "Hafiz Hamza", runs: "774", wickets: "27", result: "4-34", topPerformer: "100* Runs" },
-    { id: 10, date: "10", opponent: "Furqan", runs: "79", wickets: "14", result: "3-38", topPerformer: "28 Runs" },
-    { id: 11, date: "11", opponent: "Ahad", runs: "84", wickets: "20", result: "3-28", topPerformer: "21 Runs", }, { id: 12, date: "12", opponent: "Ahmed", runs: "4", wickets: "13", result: "3-32", topPerformer: "2 Runs", }, { id: 13, date: "13", opponent: "Hamza Jnr", runs: "175", wickets: "-", result: "-", topPerformer: "70 Runs", }, { id: 14, date: "14", opponent: "Azan", runs: "33", wickets: "5", result: "2-44", topPerformer: "22 Runs", }, { id: 15, date: "15", opponent: "Umair", runs: "189", wickets: "17", result: "3-29", topPerformer: "42 Runs", }, { id: 16, date: "16", opponent: "Haseeb", runs: "356", wickets: "4", result: "2-28", topPerformer: "72 Runs", }, { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " Runs", }, { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs", }, { id: 19, date: "19", opponent: "Tayyab", runs: "61", wickets: "8", result: "3-26", topPerformer: "36 Runs", }, { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs", },
+    { id: 1, date: "1", opponent: "Rasikh Ali", runs: "824", wickets: "42", result: "5-22", topPerformer: "81 Runs" },
+    { id: 2, date: "2", opponent: "Aun Abbas", runs: "1090", wickets: "26", result: "3-25", topPerformer: "110 Runs" },
+    { id: 3, date: "3", opponent: "Hamza Naeem", runs: "611", wickets: "28", result: "5-31", topPerformer: "67 Runs" },
+    { id: 4, date: "4", opponent: "Ali", runs: "747", wickets: "6", result: "3-38", topPerformer: "82 Runs" },
+    { id: 5, date: "5", opponent: "Mujtaba", runs: "879", wickets: "6", result: "3-27", topPerformer: "88 Runs" },
+    { id: 6, date: "6", opponent: "Hanzla", runs: "318", wickets: "71", result: "5-28", topPerformer: "72 Runs" },
+    { id: 7, date: "7", opponent: "Zain", runs: "145", wickets: "36", result: "4-36", topPerformer: "51 Runs" },
+    { id: 8, date: "8", opponent: "Saad Khan", runs: "652", wickets: "8", result: "3-19", topPerformer: "69 Runs" },
+    { id: 9, date: "9", opponent: "Hafiz Hamza", runs: "774", wickets: "29", result: "4-34", topPerformer: "100* Runs" },
+    { id: 10, date: "10", opponent: "Furqan", runs: "85", wickets: "15", result: "3-38", topPerformer: "28 Runs" },
+    { id: 11, date: "11", opponent: "Ahad", runs: "95", wickets: "23", result: "3-28", topPerformer: "21 Runs", }, 
+    { id: 12, date: "12", opponent: "Ahmed", runs: "4", wickets: "13", result: "3-32", topPerformer: "2 Runs", }, 
+    { id: 13, date: "13", opponent: "Hamza Jnr", runs: "231", wickets: "-", result: "-", topPerformer: "70 Runs", }, 
+    { id: 14, date: "14", opponent: "Azan", runs: "33", wickets: "5", result: "2-44", topPerformer: "22 Runs", }, 
+    { id: 15, date: "15", opponent: "Umair", runs: "189", wickets: "17", result: "3-29", topPerformer: "42 Runs", }, 
+    { id: 16, date: "16", opponent: "Haseeb", runs: "380", wickets: "4", result: "2-28", topPerformer: "72 Runs", }, 
+    { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " Runs", }, 
+    { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs", },
+     { id: 19, date: "19", opponent: "Tayyab", runs: "61", wickets: "8", result: "3-26", topPerformer: "36 Runs", }, 
+     { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs", },
+     { id: 21, date: "21", opponent: "Abdullah", runs: "16", wickets: "-", result: "-", topPerformer: "16* Runs", },
+     { id: 22, date: "22", opponent: "Muhammad Haider", runs: "-", wickets: "2", result: "-", topPerformer: "-", },
+
   ];
 
   const topPerformers = [
-    { id: 1, name: "Aun Abbas", stat: "Most Runs (1081)" },
-    { id: 2, name: "Mujtaba", stat: "Most Runs (807)" },
-    { id: 3, name: "Hanzla", stat: "Most Wickets (66)" },
-    { id: 4, name: "Rasikh", stat: "Most Wickets (38)" },
+    { id: 1, name: "Aun Abbas", stat: "Most Runs (1090)" },
+    { id: 2, name: "Mujtaba", stat: "Most Runs (879)" },
+    { id: 3, name: "Hanzla", stat: "Most Wickets (71)" },
+    { id: 4, name: "Rasikh", stat: "Most Wickets (42)" },
   ];
 
   const highlights = [
