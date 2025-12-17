@@ -1,3 +1,194 @@
+/* ========== ADMIN STYLES ========== */
+.admin-root {
+  padding: 2rem 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0b0216, #111827, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-root.container {
+  background: none;
+  padding: 2rem 0;
+  min-height: auto;
+  display: block;
+  align-items: normal;
+  justify-content: normal;
+}
+
+.admin-login-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-login-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-login-form input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.admin-login-form input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+.admin-login-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.admin-login-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-login-buttons .btn {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-login-buttons .btn.primary {
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  color: #fff;
+}
+
+.admin-login-buttons .btn.primary:hover {
+  background: linear-gradient(90deg, #5b21b6, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+}
+
+.admin-login-buttons .btn.secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.admin-login-buttons .btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.admin-controls {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-matches-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-matches-table th,
+.admin-matches-table td {
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: left;
+}
+
+.admin-matches-table th {
+  background: rgba(124, 58, 237, 0.2);
+  font-weight: bold;
+}
+
+.admin-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn.danger {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn.danger:hover {
+  background: #b91c1c;
+}
+
+.msg-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* ========== BASE STYLES ========== */
 body, html {
     margin: 0;
@@ -166,6 +357,7 @@ body, html {
   font-size: 1.6rem;
   font-weight: 700;
   background: linear-gradient(90deg, #7c3aed, #2563eb);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
@@ -861,7 +1053,212 @@ body, html {
   color: #ffd400;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== PLAYER STATS PAGE STYLES ===== */
+.player-stats-page {
+  padding: 20px 0;
+  min-height: 100vh;
+}
+
+.player-stats-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.player-photo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.player-photo-container {
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #7c3aed;
+}
+
+.player-large-photo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.player-basic-info {
+  background: rgba(124, 58, 237, 0.05);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.player-basic-info h1 {
+  color: #7c3aed;
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+}
+
+.player-basic-info h3 {
+  color: #ffd400;
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+}
+
+.player-stats-section {
+  background: rgba(124, 58, 237, 0.05);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.player-stats-section h2 {
+  color: #7c3aed;
+  margin: 0 0 25px 0;
+  font-size: 2rem;
+}
+
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: rgba(124, 58, 237, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card h4 {
+  margin: 0 0 10px 0;
+  color: #ffd400;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 0;
+}
+
+.best-performance {
+  margin-bottom: 30px;
+}
+
+.best-performance h3 {
+  color: #ffd400;
+  margin: 0 0 15px 0;
+}
+
+.performance-card {
+  background: rgba(124, 58, 237, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.performance-card p {
+  margin: 5px 0;
+  color: #eee;
+}
+
+.match-history h3 {
+  color: #ffd400;
+  margin: 0 0 15px 0;
+}
+
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.match-summary {
+  background: rgba(124, 58, 237, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.match-number {
+  font-weight: bold;
+  color: #7c3aed;
+}
+
+.match-result {
+  background: #7c3aed;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.match-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+}
+
+.match-stats span {
+  color: #ccc;
+}
+
+/* ===== CLICKABLE ROW STYLES ===== */
+.clickable-row {
+  transition: background-color 0.2s;
+}
+
+.clickable-row:hover {
+  background-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* ===== RESPONSIVE FOR PLAYER STATS ===== */
+@media (max-width: 768px) {
+  .player-stats-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .player-photo-container {
+    padding: 15px;
+  }
+  
+  .player-large-photo {
+    max-width: 250px;
+  }
+  
+  .stats-overview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .match-stats {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
 @media (max-width: 600px) {
   .contact-section form {
     padding: 20px;
@@ -885,5 +1282,3 @@ body, html {
     margin-top: 20px;
   }
 }
-
-  
