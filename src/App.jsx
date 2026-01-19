@@ -4,6 +4,7 @@ import "./Thunderbolts.css";
 import { Helmet } from "react-helmet-async";
 import SEO from "./components/SEO";
 import { db, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "./firebase";
+import { supabase } from "./supabase";
 const ADMIN_EMAIL = "admin@thunderbolts.local";
 const ADMIN_PASS = "supersecret";
 const ADMIN_USERNAME = "thunderadmin";
@@ -40,7 +41,7 @@ export default function ThunderboltsSite() {
       const fallbackMatches = [
         { id: 1, date: "1", opponent: "Rasikh Ali", runs: "870", wickets: "51", result: "5-22", topPerformer: "81 Runs" },
         { id: 2, date: "2", opponent: "Aun Abbas", runs: "1272", wickets: "26", result: "3-25", topPerformer: "110 Runs" },
-        { id: 3, date: "3", opponent: "Hamza Naeem", runs: "667", wickets: "34", result: "5-31", topPerformer: "67 Runs" },
+        { id: 3, date: "3", opponent: "Hamza Naeem", runs: "667", wickets: "28", result: "5-31", topPerformer: "67 Runs" },
         { id: 4, date: "4", opponent: "Ali", runs: "938", wickets: "6", result: "3-38", topPerformer: "82 Runs" },
         { id: 5, date: "5", opponent: "Mujtaba", runs: "979", wickets: "6", result: "3-27", topPerformer: "88 Runs" },
         { id: 6, date: "6", opponent: "Hanzla", runs: "368", wickets: "82", result: "5-28", topPerformer: "72 Runs" },
@@ -65,15 +66,29 @@ export default function ThunderboltsSite() {
       setMatches(fallbackMatches);
     }, 3000); // 3 second timeout
 
-    // Load matches from Firebase (only if no localStorage data)
-    const loadMatchesFromFirebase = async () => {
+    // Load matches from Supabase (only if no localStorage data)
+    const loadMatchesFromSupabase = async () => {
       try {
-        console.log("Loading matches from Firebase...");
-        const matchesDoc = await getDoc(doc(db, "data", "matches"));
-        if (matchesDoc.exists()) {
-          const matchesData = matchesDoc.data().matches || [];
-          console.log("Matches loaded from Firebase:", matchesData);
-          setMatches(matchesData);
+        console.log("Loading matches from Supabase...");
+        const { data, error } = await supabase
+          .from('matches')
+          .select('*')
+          .order('id', { ascending: true });
+        
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          console.log("Matches loaded from Supabase:", data);
+          console.log("🔍 DEBUG - First record columns:", Object.keys(data[0]));
+          console.log("🔍 DEBUG - First record full data:", data[0]);
+          
+          // Normalize column names: map 'topperformer' to 'topPerformer'
+          const normalizedData = data.map(m => ({
+            ...m,
+            topPerformer: m.topPerformer || m.topperformer || '-'
+          }));
+          
+          setMatches(normalizedData);
           clearTimeout(timeout);
         } else {
           console.log("No data in Firebase, using default data...");
@@ -96,11 +111,11 @@ export default function ThunderboltsSite() {
             { id: 16, date: "16", opponent: "Haseeb", runs: "380", wickets: "4", result: "2-28", topPerformer: "72 Runs" }, 
             { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " 32 Runs" }, 
             { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs" },
-            { id: 19, date: "19", opponent: "Tayyab", runs: "63", wickets: "12", result: "3-26", topPerformer: "36 Runs" }, 
-            { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs" },
-            { id: 21, date: "21", opponent: "Abdullah", runs: "28", wickets: "-", result: "-", topPerformer: "16* Runs" },
-            { id: 22, date: "22", opponent: "Muhammad Haider", runs: "-", wickets: "3", result: "-", topPerformer: "-" },
-            { id: 23, date: "23", opponent: "Awais", runs: "-", wickets: "-", result: "-", topPerformer: "-" },
+             { id: 19, date: "19", opponent: "Tayyab", runs: "63", wickets: "12", result: "3-26", topPerformer: "36 Runs" }, 
+             { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs" },
+             { id: 21, date: "21", opponent: "Abdullah", runs: "28", wickets: "-", result: "-", topPerformer: "16* Runs" },
+             { id: 22, date: "22", opponent: "Muhammad Haider", runs: "-", wickets: "3", result: "-", topPerformer: "-" },
+             { id: 23, date: "23", opponent: "Awais", runs: "-", wickets: "-", result: "-", topPerformer: "-" },
           ];
           setMatches(defaultMatches);
           console.log("Setting default matches:", defaultMatches);
@@ -109,9 +124,9 @@ export default function ThunderboltsSite() {
           await setDoc(doc(db, "data", "matches"), { matches: defaultMatches });
         }
       } catch (error) {
-        console.error("Error loading matches from Firebase:", error);
-        console.log("Firebase connection failed, using hardcoded data...");
-        // Use hardcoded data if Firebase fails
+        console.error("Error loading matches from Supabase:", error);
+        console.log("Supabase connection failed, using hardcoded data...");
+        // Use hardcoded data if Supabase fails
         const fallbackMatches = [
           { id: 1, date: "1", opponent: "Rasikh Ali", runs: "870", wickets: "51", result: "5-22", topPerformer: "81 Runs" },
           { id: 2, date: "2", opponent: "Aun Abbas", runs: "1272", wickets: "26", result: "3-25", topPerformer: "110 Runs" },
@@ -144,7 +159,7 @@ export default function ThunderboltsSite() {
       }
     };
 
-    loadMatchesFromFirebase();
+    loadMatchesFromSupabase();
 
     return () => clearTimeout(timeout);
   }, []);
@@ -315,12 +330,32 @@ export default function ThunderboltsSite() {
   // ----- MATCH DATA -----
   // Matches are now stored in state and loaded from localStorage
 
+  // Calculate top performers dynamically from matches
+  const getTopRunsMatch = () => {
+    if (!matches || matches.length === 0) return null;
+    return matches.reduce((max, m) => {
+      const maxRuns = parseInt(max.runs) || 0;
+      const mRuns = parseInt(m.runs) || 0;
+      return mRuns > maxRuns ? m : max;
+    });
+  };
+
+  const getTopWicketsMatch = () => {
+    if (!matches || matches.length === 0) return null;
+    return matches.reduce((max, m) => {
+      const maxWickets = parseInt(max.wickets) || 0;
+      const mWickets = parseInt(m.wickets) || 0;
+      return mWickets > maxWickets ? m : max;
+    });
+  };
+
+  const topRunsMatch = getTopRunsMatch();
+  const topWicketsMatch = getTopWicketsMatch();
+
   const topPerformers = [
-    { id: 1, name: "Aun Abbas", stat: "Most Runs (1272)" },
-    { id: 2, name: "Mujtaba", stat: "Most Runs (979)" },
-    { id: 3, name: "Hanzla", stat: "Most Wickets (82)" },
-    { id: 4, name: "Rasikh", stat: "Most Wickets (51)" },
-  ];
+    topRunsMatch ? { id: 1, name: "Most Runs", stat: topRunsMatch } : null,
+    topWicketsMatch ? { id: 2, name: "Most Wickets", stat: topWicketsMatch } : null
+  ].filter(Boolean);
 
   const highlights = [
     {
@@ -395,7 +430,6 @@ export default function ThunderboltsSite() {
     name="keywords"
     content="Thunderbolts, cricket, Pakistan, Rasikh Ali, Aun Abbas, Mujtaba, Hamza Naeem"
   />
-  <link rel="preload" as="image" href="/team-banner.webp" />
 </Helmet>
 <SEO
   title="Thunderbolts Cricket Team — Power. Passion. Precision."
@@ -609,20 +643,22 @@ export default function ThunderboltsSite() {
                 <td>{m.result}</td>
                 <td>
                   {/* Find the player object for this top performer */}
-                  {players.find((p) => m.topPerformer.includes(p.name)) ? (
+                  {m.topPerformer && players.find((p) => m.topPerformer?.includes(p.name)) ? (
                     <span
                       style={{ cursor: "pointer", color: "#7c3aed", textDecoration: "underline" }}
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent row click
-                        const player = players.find((p) => m.topPerformer.includes(p.name));
-                        const playerName = player.name.replace(/\s+/g, '-').toLowerCase();
-                        navigate(`/player/${playerName}`);
+                        const player = players.find((p) => m.topPerformer?.includes(p.name));
+                        if (player) {
+                          const playerName = player.name.replace(/\s+/g, '-').toLowerCase();
+                          navigate(`/player/${playerName}`);
+                        }
                       }}
                     >
                       {m.topPerformer}
                     </span>
                   ) : (
-                    m.topPerformer
+                    m.topPerformer || "-"
                   )}
                 </td>
               </tr>
@@ -634,18 +670,16 @@ export default function ThunderboltsSite() {
       <div className="top-performers">
         <h3>Top Performers</h3>
         <ul className="performers">
-          {topPerformers.map((tp) => {
-            const player = players.find((p) => p.name.includes(tp.name));
-            return (
-              <li
-                key={tp.id}
-                onClick={() => setSelectedPlayer(player)}
-                style={{ cursor: "pointer" }}
-              >
-                {tp.name} — <span>{tp.stat}</span>
+          {topPerformers && topPerformers.length > 0 ? (
+            topPerformers.map((tp) => (
+              <li key={tp.id} style={{ cursor: "pointer" }}>
+                <strong>{tp.name}:</strong> {tp.stat?.opponent} 
+                <span> ({tp.name === "Most Runs" ? (tp.stat?.runs || 0) + " Runs" : (tp.stat?.wickets || 0) + " Wickets"})</span>
               </li>
-            );
-          })}
+            ))
+          ) : (
+            <li>Loading top performers...</li>
+          )}
         </ul>
       </div>
     </>
@@ -775,7 +809,9 @@ Top Performer: ${player.topPerformer}
     } else if (lower.includes("whatsapp") || lower.includes("whatsapp")) {
       reply = "Contact me on whatsapp: +92 346 2641229";
     } else if (lower.includes("banana eater") || lower.includes("banana eater")) {
-      reply = "Ahad";
+      reply = "Ahad kia daikh raha ha bsdk?";
+    }  else if (lower.includes("pp") || lower.includes("pp")) {
+      reply = "Hamza jnr";
     } 
     else if (lower.includes("fucki") || lower.includes("fucki")) {
       reply = "Furqan";
@@ -792,6 +828,24 @@ Top Performer: ${player.topPerformer}
       reply = "The Thunderbolts play at Morgah Ground.";
     } else if (lower.includes("format") || lower.includes("type of cricket")) {
       reply = "They play T20 matches.";
+    }
+    else if (lower.includes("rohit")) {
+      reply = "Azan Danda la ka ao?";
+    }
+     else if (lower.includes("tati") || lower.includes("taati")) {
+      reply = "Chutiya Umair Tati hai";
+    }
+     else if (lower.includes("PP") || lower.includes("Pagal")) {
+      reply = "Hamza Jnr Pagal Pathan hai";
+    }
+     else if (lower.includes("rondu") || lower.includes("rondu")) {
+      reply = "Tayyab Rondu hai";
+    }
+     else if (lower.includes("mota") || lower.includes("mota")) {
+      reply = "Abdullah";
+    }
+     else if (lower.includes("pinky") || lower.includes("pinky")) {
+      reply = "Aun";
     }
 
     setMessages([...messages, { role: "user", text: userMsg }, { role: "bot", text: reply }]);
@@ -858,119 +912,172 @@ function AdminPage({ onExit, matches, setMatches }) {
   };
 
   const loadMatches = async () => {
-    // First, try to load from localStorage (admin changes)
-    const savedMatches = localStorage.getItem("admin_matches");
-    if (savedMatches) {
-      try {
-        const parsedMatches = JSON.parse(savedMatches);
-        setMatches(parsedMatches);
-        return; // Don't proceed to Firebase if we have localStorage data
-      } catch (error) {
-        console.error("Error parsing localStorage matches:", error);
-      }
-    }
-
-    // If no localStorage data, try Firebase
     try {
-      const matchesDoc = await getDoc(doc(db, "data", "matches"));
-      if (matchesDoc.exists()) {
-        setMatches(matchesDoc.data().matches || []);
+      console.log("⚡ Loading matches from Supabase (admin panel)...");
+      
+      // Load directly from Supabase for admin panel
+      const { data, error: sbError } = await supabase
+        .from('matches')
+        .select('*')
+        .order('id', { ascending: true });
+      
+      if (sbError) throw sbError;
+      
+      if (data && data.length > 0) {
+        console.log("✅ Matches loaded from Supabase:", data);
+        console.log("📊 First match structure:", data[0]);
+        
+        // Normalize data - convert all snake_case to camelCase and ensure no undefined values
+        const normalizedData = data.map(m => {
+          const normalized = { ...m };
+          // Handle different column name variations
+          if (m.top_performer !== undefined) {
+            normalized.topPerformer = m.top_performer;
+            delete normalized.top_performer;
+          }
+          if (m.topperformer !== undefined && !normalized.topPerformer) {
+            normalized.topPerformer = m.topperformer;
+          }
+          
+          // Ensure all fields have values (prevent undefined)
+          return {
+            id: normalized.id ?? '',
+            date: normalized.date ?? '',
+            opponent: normalized.opponent ?? '',
+            runs: normalized.runs ?? '-',
+            wickets: normalized.wickets ?? '-',
+            result: normalized.result ?? '-',
+            topPerformer: normalized.topPerformer ?? '-'
+          };
+        });
+        
+        console.log("✅ Normalized data:", normalizedData);
+        setMatches(normalizedData);
       } else {
-        // Use fallback data if no Firebase data exists
-        const fallbackMatches = [
-           { id: 1, date: "1", opponent: "Rasikh Ali", runs: "870", wickets: "51", result: "5-22", topPerformer: "81 Runs" },
-            { id: 2, date: "2", opponent: "Aun Abbas", runs: "1272", wickets: "26", result: "3-25", topPerformer: "110 Runs" },
-            { id: 3, date: "3", opponent: "Hamza Naeem", runs: "667", wickets: "34", result: "5-31", topPerformer: "67 Runs" },
-            { id: 4, date: "4", opponent: "Ali", runs: "938", wickets: "6", result: "3-38", topPerformer: "82 Runs" },
-            { id: 5, date: "5", opponent: "Mujtaba", runs: "979", wickets: "6", result: "3-27", topPerformer: "88 Runs" },
-            { id: 6, date: "6", opponent: "Hanzla", runs: "368", wickets: "82", result: "5-28", topPerformer: "72 Runs" },
-            { id: 7, date: "7", opponent: "Zain", runs: "158", wickets: "39", result: "4-36", topPerformer: "51 Runs" },
-            { id: 8, date: "8", opponent: "Saad Khan", runs: "655", wickets: "8", result: "3-19", topPerformer: "69 Runs" },
-            { id: 9, date: "9", opponent: "Hafiz Hamza", runs: "774", wickets: "29", result: "4-34", topPerformer: "100* Runs" },
-            { id: 10, date: "10", opponent: "Furqan", runs: "85", wickets: "17", result: "3-38", topPerformer: "28 Runs" },
-            { id: 11, date: "11", opponent: "Ahad", runs: "139", wickets: "27", result: "3-28", topPerformer: "21 Runs" }, 
-            { id: 12, date: "12", opponent: "Ahmed", runs: "4", wickets: "13", result: "3-32", topPerformer: "2 Runs" }, 
-            { id: 13, date: "13", opponent: "Hamza Jnr", runs: "322", wickets: "-", result: "-", topPerformer: "70 Runs" }, 
-            { id: 14, date: "14", opponent: "Azan", runs: "52", wickets: "7", result: "2-44", topPerformer: "22 Runs" }, 
-            { id: 15, date: "15", opponent: "Umair", runs: "198", wickets: "22", result: "3-29", topPerformer: "42 Runs" }, 
-            { id: 16, date: "16", opponent: "Haseeb", runs: "380", wickets: "4", result: "2-28", topPerformer: "72 Runs" }, 
-            { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " 32 Runs" }, 
-            { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs" },
-             { id: 19, date: "19", opponent: "Tayyab", runs: "63", wickets: "12", result: "3-26", topPerformer: "36 Runs" }, 
-             { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs" },
-             { id: 21, date: "21", opponent: "Abdullah", runs: "28", wickets: "-", result: "-", topPerformer: "16* Runs" },
-             { id: 22, date: "22", opponent: "Muhammad Haider", runs: "-", wickets: "3", result: "-", topPerformer: "-" },
-             { id: 23, date: "23", opponent: "Awais", runs: "-", wickets: "-", result: "-", topPerformer: "-" },
-        ];
-        setMatches(fallbackMatches);
+        console.log("No matches found in Supabase");
+        setMatches([]);
       }
     } catch (error) {
-      console.error("Error loading matches from Firebase:", error);
-      // Use fallback data if Firebase fails
-      const fallbackMatches = [
-         { id: 1, date: "1", opponent: "Rasikh Ali", runs: "870", wickets: "51", result: "5-22", topPerformer: "81 Runs" },
-            { id: 2, date: "2", opponent: "Aun Abbas", runs: "1272", wickets: "26", result: "3-25", topPerformer: "110 Runs" },
-            { id: 3, date: "3", opponent: "Hamza Naeem", runs: "667", wickets: "34", result: "5-31", topPerformer: "67 Runs" },
-            { id: 4, date: "4", opponent: "Ali", runs: "938", wickets: "6", result: "3-38", topPerformer: "82 Runs" },
-            { id: 5, date: "5", opponent: "Mujtaba", runs: "979", wickets: "6", result: "3-27", topPerformer: "88 Runs" },
-            { id: 6, date: "6", opponent: "Hanzla", runs: "368", wickets: "82", result: "5-28", topPerformer: "72 Runs" },
-            { id: 7, date: "7", opponent: "Zain", runs: "158", wickets: "39", result: "4-36", topPerformer: "51 Runs" },
-            { id: 8, date: "8", opponent: "Saad Khan", runs: "655", wickets: "8", result: "3-19", topPerformer: "69 Runs" },
-            { id: 9, date: "9", opponent: "Hafiz Hamza", runs: "774", wickets: "29", result: "4-34", topPerformer: "100* Runs" },
-            { id: 10, date: "10", opponent: "Furqan", runs: "85", wickets: "17", result: "3-38", topPerformer: "28 Runs" },
-            { id: 11, date: "11", opponent: "Ahad", runs: "139", wickets: "27", result: "3-28", topPerformer: "21 Runs" }, 
-            { id: 12, date: "12", opponent: "Ahmed", runs: "4", wickets: "13", result: "3-32", topPerformer: "2 Runs" }, 
-            { id: 13, date: "13", opponent: "Hamza Jnr", runs: "322", wickets: "-", result: "-", topPerformer: "70 Runs" }, 
-            { id: 14, date: "14", opponent: "Azan", runs: "52", wickets: "7", result: "2-44", topPerformer: "22 Runs" }, 
-            { id: 15, date: "15", opponent: "Umair", runs: "198", wickets: "22", result: "3-29", topPerformer: "42 Runs" }, 
-            { id: 16, date: "16", opponent: "Haseeb", runs: "380", wickets: "4", result: "2-28", topPerformer: "72 Runs" }, 
-            { id: 17, date: "17", opponent: "Yashfa", runs: "92", wickets: "13", result: "3-27", topPerformer: " 32 Runs" }, 
-            { id: 18, date: "18", opponent: "Tanzeel khokhar", runs: "142", wickets: "11", result: "3-34", topPerformer: "34 Runs" },
-             { id: 19, date: "19", opponent: "Tayyab", runs: "63", wickets: "12", result: "3-26", topPerformer: "36 Runs" }, 
-             { id: 20, date: "20", opponent: "Saad Jnr", runs: "68", wickets: "-", result: "-", topPerformer: "50* Runs" },
-             { id: 21, date: "21", opponent: "Abdullah", runs: "28", wickets: "-", result: "-", topPerformer: "16* Runs" },
-             { id: 22, date: "22", opponent: "Muhammad Haider", runs: "-", wickets: "3", result: "-", topPerformer: "-" },
-             { id: 23, date: "23", opponent: "Awais", runs: "-", wickets: "-", result: "-", topPerformer: "-" },
-      ];
-      setMatches(fallbackMatches);
-    }
-  };
-
-  const saveMatches = async (updatedMatches) => {
-    try {
-      await setDoc(doc(db, "data", "matches"), { matches: updatedMatches });
-      setMatches(updatedMatches);
-    } catch (error) {
-      console.error("Error saving matches to Firebase:", error);
-      alert("Firebase connection failed. Changes will only be saved locally for this session.");
-      // Still update local state even if Firebase fails
-      setMatches(updatedMatches);
+      console.error("❌ Error loading matches from Supabase:", error);
+      alert(`❌ Failed to load matches: ${error.message}`);
+      setMatches([]);
     }
   };
 
   const updateMatch = async (id, field, value) => {
-    // Update local state immediately for responsive UI
-    const updatedMatches = matches.map(m => 
-      m.id === id ? { ...m, [field]: value } : m
-    );
-    setMatches(updatedMatches);
-    
-    // Save to localStorage for persistence
-    localStorage.setItem("admin_matches", JSON.stringify(updatedMatches));
-    
-    // Try to save to Firebase in background
     try {
-      await setDoc(doc(db, "data", "matches"), { matches: updatedMatches });
-      console.log("Successfully saved to Firebase");
+      console.log(`✏️ Updating match ${id}: ${field} = ${value}`);
+      
+      // Update local state FIRST (immediate UI update)
+      const updatedMatches = matches.map(m => 
+        m.id === id ? { ...m, [field]: value } : m
+      );
+      setMatches(updatedMatches);
+      
+      // Save to localStorage so changes persist and are picked up by main app
+      console.log("📝 Saving updated matches to localStorage...");
+      localStorage.setItem("admin_matches", JSON.stringify(updatedMatches));
+      
+      // Update in Supabase using correct column name
+      let dbField = field;
+      if (field === 'topPerformer') {
+        dbField = 'topperformer';  // Use lowercase as in Supabase
+      }
+      
+      const { error: updateError } = await supabase
+        .from('matches')
+        .update({ [dbField]: value })
+        .eq('id', id);
+      
+      if (updateError) {
+        // If lowercase fails, try camelCase
+        const { error: retryError } = await supabase
+          .from('matches')
+          .update({ [field]: value })
+          .eq('id', id);
+        
+        if (retryError) throw retryError;
+      }
+      
+      console.log(`✅ Match ${id} updated in Supabase and saved to localStorage`);
     } catch (error) {
-      console.error("Firebase save failed, but localStorage worked:", error);
+      console.error("Error updating match:", error);
+      alert(`❌ Error updating match: ${error.message}`);
     }
   };
 
   const deleteMatch = async (id) => {
     if (confirm("Are you sure you want to delete this match?")) {
-      const updatedMatches = matches.filter(m => m.id !== id);
-      await saveMatches(updatedMatches);
+      try {
+        console.log(`🗑️ Deleting match ${id} from Supabase...`);
+        
+        const { error: deleteError } = await supabase
+          .from('matches')
+          .delete()
+          .eq('id', id);
+        
+        if (deleteError) throw deleteError;
+        
+        const updatedMatches = matches.filter(m => m.id !== id);
+        setMatches(updatedMatches);
+        
+        // Save to localStorage
+        localStorage.setItem("admin_matches", JSON.stringify(updatedMatches));
+        
+        console.log(`✅ Match ${id} deleted successfully`);
+        alert("✅ Match deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting match:", error);
+        alert(`❌ Error deleting match: ${error.message}`);
+      }
+    }
+  };
+
+  const addMatch = async () => {
+    try {
+      const newId = matches.length > 0 ? Math.max(...matches.map(m => m.id)) + 1 : 1;
+      
+      const newMatchData = {
+        id: newId,
+        date: "",
+        opponent: "New Match",
+        runs: "-",
+        wickets: "-",
+        result: "-",
+        topperformer: "-"  // Use lowercase to match Supabase schema
+      };
+      
+      console.log("➕ Adding new match to Supabase:", newMatchData);
+      
+      // Insert into Supabase using lowercase column name
+      const { error: insertError } = await supabase
+        .from('matches')
+        .insert([newMatchData]);
+      
+      if (insertError) throw insertError;
+      
+      // Update local state with camelCase for UI consistency
+      const newMatch = {
+        id: newId,
+        date: "",
+        opponent: "New Match",
+        runs: "-",
+        wickets: "-",
+        result: "-",
+        topPerformer: "-"
+      };
+      
+      const updatedMatches = [...matches, newMatch];
+      setMatches(updatedMatches);
+      
+      // Save to localStorage
+      localStorage.setItem("admin_matches", JSON.stringify(updatedMatches));
+      
+      console.log(`✅ New match added successfully`);
+      alert("✅ New match added successfully!");
+    } catch (error) {
+      console.error("Error adding match:", error);
+      alert(`❌ Error adding match: ${error.message}`);
     }
   };
 
@@ -1032,6 +1139,9 @@ function AdminPage({ onExit, matches, setMatches }) {
 
       <div className="admin-section">
         <h3>Match Stats Management</h3>
+        <button onClick={addMatch} className="btn primary" style={{ marginBottom: "15px" }}>
+          ➕ Add New Match
+        </button>
         <table className="admin-matches-table">
           <thead>
             <tr>
@@ -1052,7 +1162,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.date} 
+                    value={String(m.date ?? '')}
                     onChange={(e) => updateMatch(m.id, 'date', e.target.value)}
                     className="admin-input"
                   />
@@ -1060,7 +1170,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.opponent} 
+                    value={String(m.opponent ?? '')}
                     onChange={(e) => updateMatch(m.id, 'opponent', e.target.value)}
                     className="admin-input"
                   />
@@ -1068,7 +1178,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.runs} 
+                    value={String(m.runs ?? '-')}
                     onChange={(e) => updateMatch(m.id, 'runs', e.target.value)}
                     className="admin-input"
                   />
@@ -1076,7 +1186,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.wickets} 
+                    value={String(m.wickets ?? '-')}
                     onChange={(e) => updateMatch(m.id, 'wickets', e.target.value)}
                     className="admin-input"
                   />
@@ -1084,7 +1194,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.result} 
+                    value={String(m.result ?? '-')}
                     onChange={(e) => updateMatch(m.id, 'result', e.target.value)}
                     className="admin-input"
                   />
@@ -1092,7 +1202,7 @@ function AdminPage({ onExit, matches, setMatches }) {
                 <td>
                   <input 
                     type="text" 
-                    value={m.topPerformer} 
+                    value={String(m.topPerformer ?? '-')}
                     onChange={(e) => updateMatch(m.id, 'topPerformer', e.target.value)}
                     className="admin-input"
                   />

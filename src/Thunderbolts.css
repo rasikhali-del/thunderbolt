@@ -26,7 +26,7 @@
   max-width: 400px;
   width: 90%;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  animation: slideUp 0.5s ease-out;
+  animation: bounceIn 0.7s ease-out;
 }
 
 @keyframes slideUp {
@@ -66,6 +66,16 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   width: 100%;
+  animation: fadeInUp 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.admin-login-form input:nth-of-type(1) {
+  animation-delay: 0.1s;
+}
+
+.admin-login-form input:nth-of-type(2) {
+  animation-delay: 0.2s;
 }
 
 .admin-login-form input:focus {
@@ -73,6 +83,7 @@
   border-color: #7c3aed;
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 .admin-login-form input::placeholder {
@@ -116,6 +127,10 @@
 .admin-login-buttons .btn.secondary:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+.admin-login-buttons .btn:hover {
+  transform: translateY(-2px);
 }
 
 .admin-controls {
@@ -340,6 +355,7 @@ body, html {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   transition: background 0.3s ease, box-shadow 0.3s ease;
   padding: 0.8rem 0;
+  animation: slideInDown 0.6s ease-out;
 }
 
 /* Navbar container */
@@ -380,17 +396,15 @@ body, html {
   transition: color 0.3s ease;
 }
 
-/* Gradient underline hover */
 .nav a::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 0%;
+  width: 0;
   height: 2px;
+  bottom: -5px;
+  left: 0;
   background: linear-gradient(90deg, #7c3aed, #2563eb);
-  transition: width 0.3s ease;
-  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .nav a:hover {
@@ -508,13 +522,16 @@ body, html {
 .hero-text {
   flex: 1;
   min-width: 300px;
+  animation: fadeInLeft 1s ease-out;
 }
 
 .hero-text h1 {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 800;
   color: #ffd400;
   margin-bottom: 10px;
+  animation: glowText 3.5s ease-in-out infinite;
+  letter-spacing: 1px;
 }
 
 .changing-text {
@@ -542,35 +559,47 @@ body, html {
   margin-top: 30px;
 }
 
-.btn {
+.hero-buttons .btn {
   padding: 12px 26px;
   border-radius: 9999px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease-out;
+  animation-fill-mode: both;
 }
 
-.btn.primary {
+.hero-buttons .btn.primary {
   background: linear-gradient(90deg, #7c3aed, #2563eb);
   color: #fff;
   border: none;
 }
 
-.btn.primary:hover {
+.hero-buttons .btn.primary:hover {
   background: linear-gradient(90deg, #5b21b6, #1e40af);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.4);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
-.btn.secondary {
+.hero-buttons .btn.secondary {
   border: 2px solid #ffd400;
   color: #ffd400;
   background: transparent;
 }
 
-.btn.secondary:hover {
+.hero-buttons .btn.secondary:hover {
   background: #ffd400;
   color: #000;
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+}
+
+.hero-buttons .btn:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.hero-buttons .btn:nth-child(2) {
+  animation-delay: 0.5s;
 }
 
 /* Hero Image */
@@ -578,6 +607,7 @@ body, html {
   flex: 1;
   position: relative;
   text-align: center;
+  animation: fadeInRight 1s ease-out 0.2s both;
 }
 
 .hero-image img {
@@ -588,10 +618,12 @@ body, html {
   object-fit: cover;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   transition: transform 0.4s ease;
+  animation: float 4s ease-in-out infinite;
 }
 
 .hero-image img:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
+  animation: none;
 }
 
 /* Featured Badge */
@@ -604,6 +636,12 @@ body, html {
   border-radius: 10px;
   border-left: 4px solid #ffd400;
   backdrop-filter: blur(6px);
+  animation: bounceIn 1s ease-out 0.7s both;
+  transition: all 0.3s ease;
+}
+
+.featured:hover {
+  transform: scale(1.05);
 }
 
 .featured .highlight {
@@ -655,6 +693,7 @@ body, html {
   text-align: center;
   position: relative;
   color: var(--text-color, #e5e7eb);
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .about-section h2 {
@@ -662,6 +701,13 @@ body, html {
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: #ffd400;
+  animation: fadeInDown 0.8s ease-out;
+  transition: all 0.3s ease;
+}
+
+.about-section h2:hover {
+  color: #00b7ff;
+  text-shadow: 0 0 15px rgba(0, 183, 255, 0.6);
 }
 
 .about-section p {
@@ -670,6 +716,8 @@ body, html {
   color: #cbd5e1;
   line-height: 1.7;
   font-size: 1.05rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  transition: all 0.3s ease;
 }
 
 /* ===== NEWS & HIGHLIGHTS ===== */
@@ -678,6 +726,7 @@ body, html {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(6px);
   color: var(--text-color, #e5e7eb);
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .news-section h2 {
@@ -686,6 +735,7 @@ body, html {
   font-weight: 700;
   color: #ffd400;
   margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 .news-grid {
@@ -705,12 +755,26 @@ body, html {
   transition: all 0.3s ease;
   backdrop-filter: blur(6px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.news-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.news-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.news-card:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 .news-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-12px);
+  animation: glowPulse 2s ease-in-out infinite;
   border-color: #2563eb;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
 .news-card h3 {
@@ -736,6 +800,7 @@ body, html {
   padding: 80px 0;
   color: var(--text-color, #f8fafc);
   text-align: center;
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .players-section h2 {
@@ -743,6 +808,7 @@ body, html {
   font-weight: 700;
   color: #ffd400;
   margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 .players-grid {
@@ -762,12 +828,30 @@ body, html {
   transition: all 0.3s ease;
   text-align: center;
   backdrop-filter: blur(6px);
+  animation: bounceIn 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.player-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.player-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.player-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.player-card:nth-child(4) {
+  animation-delay: 0.4s;
 }
 
 .player-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-12px);
   border-color: #ffd400;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 .player-card img {
@@ -777,11 +861,11 @@ body, html {
   object-fit: cover;
   margin-bottom: 12px;
   border: 2px solid rgba(255,255,255,0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .player-card img:hover {
-  transform: scale(1.03);
+  transform: scale(1.06);
 }
 
 .player-card h3 {
@@ -820,8 +904,8 @@ body, html {
   padding: 80px 0;
   color: var(--text-color, #f8fafc);
   text-align: center;
-  
   backdrop-filter: blur(6px);
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .scores-section h2 {
@@ -829,6 +913,7 @@ body, html {
   font-weight: 700;
   color: #ffd400;
   margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 /* Table Styling */
@@ -871,6 +956,43 @@ body, html {
   transition: background 0.3s ease;
 }
 
+table tbody tr {
+  animation: fadeInUp 0.5s ease-out;
+  animation-fill-mode: both;
+  transition: all 0.3s ease;
+}
+
+table tbody tr:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+table tbody tr:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+table tbody tr:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+table tbody tr:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+table tbody tr:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+table tbody tr:nth-child(n+6) {
+  animation-delay: 0.3s;
+}
+
+table tbody tr:hover {
+  transform: translateX(4px);
+  background-color: rgba(124, 58, 237, 0.15) !important;
+  animation: glowPulse 2s ease-in-out infinite;
+  border-left: 4px solid #7c3aed;
+}
+
 /* ===== TOP PERFORMERS ===== */
 .top-performers {
   margin-top: 50px;
@@ -878,6 +1000,7 @@ body, html {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 
 .top-performers h3 {
@@ -902,11 +1025,22 @@ body, html {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.3s ease;
+  animation: slideInLeft 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.performers li:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.performers li:nth-child(2) {
+  animation-delay: 0.6s;
 }
 
 .performers li:hover {
-  background: rgba(255, 212, 0, 0.1);
-  transform: translateX(6px);
+  transform: translateX(8px);
+  color: #7c3aed;
+  text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
 }
 
 .performers span {
@@ -937,6 +1071,7 @@ body, html {
   text-align: center;
   color: var(--text-color, #f8fafc);
   backdrop-filter: blur(6px);
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .contact-section h2 {
@@ -944,6 +1079,7 @@ body, html {
   font-weight: 700;
   color: #ffd400;
   margin-bottom: 1.5rem;
+  animation: fadeInDown 0.8s ease-out;
 }
 
 .contact-section p {
@@ -954,7 +1090,6 @@ body, html {
   line-height: 1.6;
 }
 
-/* Contact Form */
 .contact-section form {
   display: flex;
   flex-direction: column;
@@ -967,6 +1102,7 @@ body, html {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
+  animation: scaleIn 0.6s ease-out 0.2s both;
 }
 
 .contact-section input,
@@ -978,7 +1114,7 @@ body, html {
   color: #f1f5f9;
   resize: none;
   font-size: 1rem;
-  transition: border 0.3s ease, background 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .contact-section input:focus,
@@ -986,6 +1122,8 @@ body, html {
   border-color: #7c3aed;
   background: rgba(255, 255, 255, 0.08);
   outline: none;
+  transform: scale(1.03);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 .contact-section button {
@@ -996,38 +1134,39 @@ body, html {
   border-radius: 9999px;
   padding: 12px;
   cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .contact-section button:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
+  transform: translateY(-4px);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
-/* Contact Info */
 .contact-info {
   margin-top: 30px;
   color: #cbd5e1;
   font-size: 0.95rem;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 
 .contact-info a {
   color: #38bdf8;
   margin: 0 6px;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .contact-info a:hover {
-  color: #ffd400;
+  color: #7c3aed;
+  text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
 }
 
-/* Map Embed */
 .map {
   margin-top: 40px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  animation: scaleIn 0.8s ease-out 0.6s both;
 }
 
 /* ===== FOOTER ===== */
@@ -1040,6 +1179,7 @@ body, html {
   font-size: 0.9rem;
   letter-spacing: 0.3px;
   backdrop-filter: blur(8px);
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .footer a {
@@ -1280,5 +1420,295 @@ body, html {
 
   .map {
     margin-top: 20px;
+  }
+}
+
+/* ========== 🎬 COMPREHENSIVE ANIMATIONS & TRANSITIONS ========== */
+
+/* ===== FADE-IN ANIMATIONS ===== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== SCALE ANIMATIONS ===== */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleUpHover {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+/* ===== GLOW ANIMATIONS ===== */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+    border-color: rgba(124, 58, 237, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.8), 0 0 35px rgba(37, 99, 235, 0.6);
+    border-color: rgba(124, 58, 237, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+    border-color: rgba(124, 58, 237, 0.4);
+  }
+}
+
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 212, 0, 0.4), 0 0 10px rgba(255, 212, 0, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 212, 0, 0.9), 0 0 25px rgba(255, 212, 0, 0.6), 0 0 35px rgba(37, 99, 235, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 212, 0, 0.4), 0 0 10px rgba(255, 212, 0, 0.2);
+  }
+}
+
+/* ===== FLOATING ANIMATIONS ===== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* ===== BOUNCE ANIMATIONS ===== */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(40px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ===== SHIMMER ANIMATIONS ===== */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ===== GRADIENT BACKGROUND ANIMATIONS ===== */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== PULSE ANIMATIONS ===== */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ===== SLIDE ANIMATIONS ===== */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== ROTATION ANIMATIONS ===== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* GENERIC ANIMATION CLASSES */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+
+/* SMOOTH TRANSITIONS FOR ALL INTERACTIVE ELEMENTS */
+button,
+a,
+input,
+textarea,
+select {
+  transition: all 0.3s ease;
+}
+
+/* LOADING SPINNER */
+.loading-spinner {
+  animation: spin 1.5s linear infinite;
+  display: inline-block;
+}
+
+/* HOVER EFFECTS FOR CARDS */
+.news-card,
+.player-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card::before,
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.news-card:hover::before,
+.player-card:hover::before {
+  left: 100%;
+}
+
+/* ACCESSIBILITY: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* RESPONSIVE ANIMATIONS */
+@media (max-width: 768px) {
+  .hero-section .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .news-card,
+  .player-card {
+    animation-duration: 0.4s;
+  }
+
+  table tbody tr:hover {
+    transform: translateX(2px);
+  }
+
+  .hero-image img:hover {
+    transform: scale(1.02);
   }
 }

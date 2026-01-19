@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:backend": "node --loader dotenv/config backend/server.js",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "diagnose": "node --loader dotenv/config backend/diagnose.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
     "firebase": "^12.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

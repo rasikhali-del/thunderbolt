@@ -9,16 +9,14 @@ export default function PlayerStatsPage({ matches, players }) {
   const player = players.find(p => 
     playerName.toLowerCase().replace(/-/g, ' ') === p.name.toLowerCase()
   );
-
   // Get all matches where this player appears as opponent or top performer
   const playerMatches = matches.filter(m => 
-    m.opponent.toLowerCase() === player?.name.toLowerCase() ||
-    (player && m.topPerformer.toLowerCase().includes(player.name.toLowerCase()))
+    m.opponent?.toLowerCase() === player?.name.toLowerCase() ||
+    (player && m.topPerformer && m.topPerformer.toLowerCase().includes(player.name.toLowerCase()))
   );
-
   // Get matches where player is opponent (their own performance)
   const playerOwnMatches = matches.filter(m => 
-    m.opponent.toLowerCase() === player?.name.toLowerCase()
+    m.opponent?.toLowerCase() === player?.name.toLowerCase()
   );
 
   // Calculate player statistics
